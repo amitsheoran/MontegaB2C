@@ -1,0 +1,413 @@
+package MontegaDev;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import static MontegaVariables.UrlVariables.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.lang.module.ModuleDescriptor.Exports;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.PasswordAuthentication;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Properties;
+import java.util.Random;
+
+import javax.naming.ldap.ExtendedRequest;
+
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+import static MontegaVariables.FooterUrls.*;
+
+
+
+
+public class MontegaLogin 
+{
+
+	public static void main(String[] args) throws InterruptedException  
+	{
+		WebDriver driver=new ChromeDriver();
+		driver.get(https://dev.montega.ch);
+
+		//driver.manage().deleteAllCookies();
+		driver.manage().window().maximize();
+		
+		String expectedTitle = "Montega";
+	    String actualTitle = driver.getTitle();
+	         // compare the expected title of the page with the actual title of the page and print the result
+	        if (expectedTitle.equals(actualTitle))
+	             { System.out.println("Verification Successful - The correct title is displayed on the web page."); }
+	        else { System.out.println("Verification Failed - An incorrect title is displayed on the web page."); }
+    	    Thread.sleep(1000);
+    	    
+    	    //homepage click on product
+    	    driver.findElement(By.xpath("/html/body/div/div/div/div/section/section[3]/div/div/div/div/div/div/div[1]/div/div/a")).click();
+    	    //driver.findElement(By.id("cat_home")).click();
+    	    Thread.sleep(1000);
+    	    
+    	    //to scroll down
+    	     JavascriptExecutor js2 = (JavascriptExecutor) driver;
+             js2.executeScript("window.scrollBy(0,500)");
+     	    Thread.sleep(4000);
+     	    
+
+            //click on first product
+     	    driver.findElement(By.id("btn-1")).click();
+     	    Thread.sleep(2000);
+     	    
+     	    //Generate a random number
+     	    Random random4 = new Random();
+			int randomNumber4 = random4.nextInt(7777)+ 4444; 
+
+
+     	    //enter value 2000 for first product
+			WebElement element9 = driver.findElement(By.xpath("/html/body/div/div/div/div/section/section[3]/div/div/div[1]/div/div/div[1]/div[2]/div/div/input"));
+			element9.sendKeys(Integer.toString(randomNumber4));
+			Thread.sleep(2000);
+			
+ 	        //click on negotatiate button
+     	    driver.findElement(By.id("negotiate")).click(); 
+			Thread.sleep(1000);
+     	    
+			
+			// Switch to the pop-up window
+			String PopupWindowHandle = driver.getWindowHandle();
+			driver.switchTo().window(PopupWindowHandle);
+			Thread.sleep(3000);
+			
+			// Create an Actions object
+			Actions actions = new Actions(driver);
+
+	        //Find the dropdown element and Select Mr.
+			WebElement dropdownElement = driver.findElement(By.xpath("//*[@id=\"myModal\"]/div/div/div/div/div/div/form/div[1]/div[1]/div/select/option[1]"));
+			if (dropdownElement.isDisplayed())
+		       {   System.out.println("Title Dropdown is Found and Mr. Selected Successfully"); 
+		           dropdownElement.click(); }
+		    else {   System.out.println("Title Dropdown is Not Found");  }
+			
+			
+			//Insert First Name of User
+			WebElement FirstName = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[3]/div/div/div/div/div/div/form/div[1]/div[2]/div/label"));
+			if (FirstName.isDisplayed())
+		    {   System.out.println("First Name 'Field' is Found and Name Inserted Successfully"); 
+		        actions.moveToElement(FirstName).click().perform();
+			    actions.sendKeys("Amit").perform(); }
+		    else {   System.out.println("First Name Field is Not Found"); }
+			Thread.sleep(1000);
+		
+			//Insert Last Name of User
+			WebElement element2 = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[3]/div/div/div/div/div/div/form/div[1]/div[3]/div/label"));
+			actions.moveToElement(element2).click().perform();
+			actions.sendKeys("Sheoran").perform();
+			Thread.sleep(1000);
+
+			//Enter the Email Id of User
+			WebElement element3 = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[3]/div/div/div/div/div/div/form/div[2]/div[1]/div/label"));
+			actions.moveToElement(element3).click().perform();
+			
+			// Generate a random number
+			Random random = new Random();
+			int randomNumber = random.nextInt(1000);// generates a number between 0 and 999
+			actions.sendKeys("amit+" + randomNumber + "@privatedeal.com").perform();
+			Thread.sleep(1000);
+			
+			//Enter the Mobile Number Of User (882 <4Digit Random Number> 866)
+			WebElement element4 = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[3]/div/div/div/div/div/div/form/div[2]/div[2]/div/div/div[2]/div/label"));
+			actions.moveToElement(element4).click().perform();
+			//Generate a random number
+			Random random2 = new Random();
+			int randomNumberMobile = random2.nextInt(7778) + 2222;
+			actions.sendKeys("882" + randomNumberMobile + "866").perform();
+			Thread.sleep(1000);
+			
+			
+			//click on check box
+			WebElement checkbox = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[3]/div/div/div/div/div/div/form/div[3]/div/div[2]/label"));
+			if (checkbox.isDisplayed())
+			    {   System.out.println("Check Box is Found and Clicked Successfully"); 
+			    checkbox.click(); }
+			else {   System.out.println("Check Box is Not Found "); }
+			Thread.sleep(4000);
+
+			
+			
+			//Submit button of guest details
+			WebElement element5 = driver.findElement(By.xpath("//*[@id=\"myModal\"]/div/div/div/div/div/div/form/div[4]/button"));
+			actions.moveToElement(element5).click().perform();
+			Thread.sleep(8000);
+			
+		    //Click on the Offer Accept button First Time
+	         WebElement OfferAcceptButton = driver.findElement(By.id("accept"));
+	         if (OfferAcceptButton.isDisplayed())
+    	         { System.out.println("Accept Button is Visible and Clicked Successfully");
+    	           OfferAcceptButton.click(); }
+             else { System.out.println("Accept Button is Not Displayed"); }
+	         Thread.sleep(7000);
+	        
+	        
+	        //Click on the Negotiate button if you want to Negotiate Again
+			//WebElement ValueToNegotiate = driver.findElement(By.xpath("//*[@id=\"booking-process\"]/div/div/div/div/div/div/div/div/div[2]/div/div/input"));
+			//ValueToNegotiate.sendKeys("70000");
+	        //Thread.sleep(4000);
+
+	      
+	        
+	        /*WebElement NegotiateButton = driver.findElement(By.id("ngot"));
+	        if (NegotiateButton.isDisplayed())
+	       	        {     System.out.println("Negotiate Button is Displayed and Clicked Successfully");
+	                      NegotiateButton.click(); }
+	        else    { System.out.println("Negotiate Button is Not Displayed"); }
+	        Thread.sleep(7000);*/
+
+	        //Create an Actions object
+	        //Actions actions2 = new Actions(driver);
+			//Thread.sleep(2000);
+
+	        //Move the mouse cursor to the button and click on it
+	        //actions2.moveToElement(buttonElement).click().perform();
+			//Thread.sleep(2000);
+			
+			
+			//Click on Proceed To Checkout Button
+	        WebElement ProceedToCheckout = driver.findElement(By.id("proceedchk"));
+	        if (ProceedToCheckout.isDisplayed())
+		         {   //to scroll down by 200 pixle
+	    	         JavascriptExecutor ScrollDown = (JavascriptExecutor) driver;
+	    	         ScrollDown.executeScript("window.scrollBy(0,200)");
+	     	         Thread.sleep(1000);
+	        	     System.out.println("Checkout Box is Found and Clicked Successfully"); 
+				     Thread.sleep(4000);
+		             ProceedToCheckout.click(); }
+		    else {   System.out.println("Checkout Box is Not Found "); }
+		    Thread.sleep(4000);
+	        
+	        
+	        //Click on Contiue to Shopping Button 
+	       //WebElement CotinueShopping = driver.findElement(By.id("continueShop"));
+	       //CotinueShopping.click();
+	       //Thread.sleep(6000);
+	        
+	        
+	        //Click on Proceed To Checkout Button on Cart Page
+	        WebElement ProceedToCheckoutOnCart = driver.findElement(By.id("cartProceedchk"));
+	        if (ProceedToCheckoutOnCart.isDisplayed())  
+	           {    System.out.println("Proceed To Checkout On Cart Box is Found and Clicked Successfully"); 
+			        Thread.sleep(4000);
+			        ProceedToCheckoutOnCart.click(); }
+	        else {   System.out.println("Proceed To Checkout On Cart Box is Not Found "); }
+	        Thread.sleep(7000);
+	        
+	        
+	       // Actions actions3 = new Actions(driver);
+			//Thread.sleep(1000);
+	        //actions3.moveToElement(buttonElement1).click().perform();
+			//Thread.sleep(5000);
+			
+			//to scroll down
+   	        //JavascriptExecutor js4 = (JavascriptExecutor) driver;
+            //js4.executeScript("window.scrollBy(0,500)");
+    	    //Thread.sleep(1000);
+			
+			//Click on Proceed To Checkout
+	        //WebElement buttonElement2 = driver.findElement(By.xpath("//*[@id=\"booking-process\"]/div/div/div[2]/div[2]/div[2]/button[2]"));
+			//Thread.sleep(1000);
+	        //Actions actions4 = new Actions(driver);
+			//Thread.sleep(1000);
+	        //actions4.moveToElement(buttonElement2).click().perform();
+			//Thread.sleep(3000);
+			
+			
+			//Address fill
+			WebElement element6 = driver.findElement(By.xpath("//*[@id=\"booking-process\"]/div/div/div/div[2]/div/div/form/div[3]/div[1]/div/input"));
+			Thread.sleep(2000);
+			actions.moveToElement(element6).click().perform();
+			//Thread.sleep(2000);
+			actions.sendKeys("New Colony, South Block, Street No 5, Ward No 30").perform();
+			Thread.sleep(1000);
+			
+			//Road No fill
+			WebElement element8 = driver.findElement(By.xpath("//*[@id=\"booking-process\"]/div/div/div/div[2]/div/div/form/div[3]/div[2]/div/input"));
+			//Thread.sleep(2000);
+			actions.moveToElement(element8).click().perform();
+			Thread.sleep(2000);
+			actions.sendKeys("Loharu Road").perform();
+			Thread.sleep(1000);
+			
+			//Additional address information
+			WebElement elementamit = driver.findElement(By.xpath("//*[@id=\"booking-process\"]/div/div/div/div[2]/div/div/form/div[4]/div/div/label"));
+			//Thread.sleep(2000);
+			actions.moveToElement(elementamit).click().perform();
+			//Thread.sleep(2000);
+			actions.sendKeys("No Additional Infomartion").perform();
+			Thread.sleep(1000);
+			
+			
+			//To Fill Zip Code
+			WebElement element12 = driver.findElement(By.xpath("//*[@id=\"booking-process\"]/div/div/div/div[2]/div/div/form/div[5]/div[1]/div/label"));
+			//Thread.sleep(2000);
+			actions.moveToElement(element12).click().perform();
+			//Thread.sleep(2000);
+			actions.sendKeys("333031").perform();
+			Thread.sleep(1000);
+			
+			
+			//To Fill City
+			WebElement element13 = driver.findElement(By.xpath("//*[@id=\"booking-process\"]/div/div/div/div[2]/div/div/form/div[5]/div[2]/div/label"));
+			//Thread.sleep(2000);
+			actions.moveToElement(element13).click().perform();
+			//Thread.sleep(2000);
+			actions.sendKeys("Pilani").perform();
+			Thread.sleep(1000);
+			
+			//to scroll down
+   	        JavascriptExecutor js3 = (JavascriptExecutor) driver;
+            js3.executeScript("window.scrollBy(0,500)");
+    	    Thread.sleep(1000);
+			
+			
+			//Final Click on Proceed To Checkout
+			WebElement ProceedToCheckOutAfterAddressFill = driver.findElement(By.xpath("//*[@id=\"booking-process\"]/div/div/div/div[2]/div/div/form/div[8]/button[1]"));
+			if (ProceedToCheckOutAfterAddressFill.isDisplayed())  
+	           {    Thread.sleep(4000);
+			        Actions PreceedToAddress = new Actions(driver);
+			        PreceedToAddress.moveToElement(ProceedToCheckOutAfterAddressFill).click().perform();
+					Thread.sleep(1000); 
+					System.out.println("Proceed To Submit Box is Found and Clicked Successfully"); }
+	        else {   System.out.println("Proceed To Submit Box is Not Found "); }
+			
+			
+			
+			//to scroll down
+   	        JavascriptExecutor js6 = (JavascriptExecutor) driver;
+            js6.executeScript("window.scrollBy(0,500)");
+    	    Thread.sleep(1000);
+    	    
+    	    
+    	   // Switch to the iframe
+    	    driver.switchTo().frame("iframe1");
+		    System.out.println("Switch To Iframe is Done Successfully"); 
+		    
+		    //to scroll Up
+   	        JavascriptExecutor ScrollUp = (JavascriptExecutor) driver;
+   	        ScrollUp.executeScript("window.scrollBy(0, -500)");
+    	    Thread.sleep(1000);
+    	    
+
+    	     //Create an Actions object
+    	     Actions actions1 = new Actions(driver);
+    	    
+    	    /*Make Payment With Visa
+   	        WebElement MakePaymentWithVisa = driver.findElement(By.xpath("//button[@class='btn btn-select btn-card-visa']"));
+   	        if (MakePaymentWithVisa.isDisplayed())
+		    {    
+		         actions1.moveToElement(MakePaymentWithVisa).click().perform();
+				 Thread.sleep(4000);
+				 System.out.println("MakePaymentWithVisa 1 is Working fine");
+		   	     WebElement MakePaymentWithVisa2 = driver.findElement(By.xpath("//button[@class='btn btn-next']"));
+		   	     MakePaymentWithVisa2.click();
+				 System.out.println("MakePaymentWithVisa 2 is Working fine");
+				 Thread.sleep(4000);
+		   	     WebElement MakePaymentWithVisa3 = driver.findElement(By.id("chargeInMerchantAmount"));
+		   	     MakePaymentWithVisa3.click();
+				 System.out.println("MakePaymentWithVisa 3 is Working fine");
+		   	     Thread.sleep(4000);
+		   	     //WebElement MakePaymentWithVisa4 = driver.findElement(By.xpath("/html/body/div/div[3]/div[1]/form/input[1]"));
+		   	     //WebElement MakePaymentWithVisa4 = driver.findElement(By.cssSelector("input.btn.btn-block.btn-primary"));
+		   	     //WebElement MakePaymentWithVisa4 = driver.findElement(By.id("submit"));
+		   	     //WebElement MakePaymentWithVisa4 = driver.findElement(By.xpath("//element[@class='btn btn-block btn-primary' and @value='Process' and @id='submit' and @name='submitButton']"));
+		   	     WebElement MakePaymentWithVisa4 = driver.findElement(By.xpath("//element[contains(text(),'Process')]"));
+		   	     MakePaymentWithVisa4.click();
+		   	     System.out.println("Booking Payment With Visa Card is Done Successfully");
+		   	     
+		   	  
+		    }
+		    else {   System.out.println("Visa Card Payment Method is Not Found"); }
+			Thread.sleep(1000);*/
+			
+		
+			
+			//Make Payment With Master Card
+   	        WebElement MakePaymentWithMasterCard = driver.findElement(By.xpath("//button[@class='btn btn-select btn-card-mastercard']"));
+   	        if (MakePaymentWithMasterCard.isDisplayed())
+		    {   
+   	        	actions1.moveToElement(MakePaymentWithMasterCard).click().perform(); 
+				//System.out.println("Make Payment With Master Card 0 is Working fine");
+				Thread.sleep(2000);
+	   	        WebElement MakePaymentWithMasterCard1 = driver.findElement(By.xpath("//button[@class='btn btn-next']"));
+	   	        MakePaymentWithMasterCard1.click();
+				//System.out.println("Make Payment With Master Card 1 1is Working fine");
+				Thread.sleep(2000);
+				WebElement MakePaymentWithMasterCard2 = driver.findElement(By.xpath("//button[@class='btn btn-next']"));
+	   	        MakePaymentWithMasterCard2.click();
+				Thread.sleep(2000);
+				//System.out.println("Make Payment With Master Card 2 1is Working fine");				
+   	        	System.out.println("Booking Payment With MasterCard is Done Successfully"); }
+		    else {   System.out.println("MasterCard Payment Method is Not Found"); }
+			Thread.sleep(1000);
+			
+			/*Make Payment With Amex Card
+   	        WebElement MakePaymentWithAmexCard = driver.findElement(By.xpath("//button[@class='btn btn-select btn-card-amex']"));
+   	        if (MakePaymentWithAmexCard.isDisplayed())
+		    {   System.out.println("Booking Payment With Amex Card is Done Successfully"); 
+		         actions1.moveToElement(MakePaymentWithAmexCard).click().perform(); }
+		    else {   System.out.println("Amex Card Payment Method is Not Found"); }
+			Thread.sleep(1000);*/
+			
+			 /*Make Payment With Twint
+   	        WebElement MakePaymentWithTwint = driver.findElement(By.xpath("//button[@class='btn btn-select btn-onlinepaymentservice-twint']"));
+   	         if (MakePaymentWithTwint.isDisplayed())
+		    {   System.out.println("Booking Payment With Twint Wallet is Done Successfully"); 
+		         actions1.moveToElement(MakePaymentWithTwint).click().perform(); }
+		    else {   System.out.println("Twint Payment Method is Not Found"); }
+			Thread.sleep(1000);*/
+			
+			/*Make Payment With Google Pay
+   	        WebElement MakePaymentWithGooglePay = driver.findElement(By.xpath("//button[@class='btn btn-select btn-wallet-googlepay']"));
+   	         if (MakePaymentWithGooglePay.isDisplayed())
+		    {    
+		         actions1.moveToElement(MakePaymentWithGooglePay).click().perform(); 
+		   	     //WebElement ClickOnFingerPrint = driver.findElement(By.xpath("//button[@class='pay-button btn btn-light']"));
+		         //actions1.moveToElement(ClickOnFingerPrint).click().perform(); 
+		         System.out.println("Booking Payment With Google Pay Wallet is Done Successfully");
+		    }
+		    else {   System.out.println("Google Pay Wallet Payment Method is Not Found"); }
+			Thread.sleep(1000);*/
+		
+ 			
+ 			/*Cancel Payment at Last
+   	        WebElement CancelBooking = driver.findElement(By.xpath("//button[@class='btn btn-link btn-abort']"));
+   	        if (CancelBooking.isDisplayed())
+		    {   System.out.println("Cancel Booking Button is Found and Clicked Successfully"); 
+		         actions1.moveToElement(CancelBooking).click().perform(); }
+		    else {   System.out.println("Cancel Booking Button is Not Found"); }
+			Thread.sleep(1000);*/
+    	 
+			
+			// Switch back to the main page
+			driver.switchTo().defaultContent();	
+			Thread.sleep(7000);
+     	    System.out.println("******Test Case Run Successfully**************");
+     	    driver.close();
+
+    }
+}
+       
+ 
+
+	
+
+
